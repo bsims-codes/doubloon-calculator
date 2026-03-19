@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubloon Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: linear-gradient(145deg, #2a2a40 0%, #1a1a2e 100%);
+            border-radius: 24px;
+            padding: 40px 35px;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 420px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Pirata One', cursive;
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+        }
+
+        .doubloon-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .doubloon-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .doubloon-row.gold { border-left: 3px solid #ffd700; }
+        .doubloon-row.silver { border-left: 3px solid #c0c0c0; }
+        .doubloon-row.bronze { border-left: 3px solid #cd7f32; }
+
+        .doubloon-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            margin-right: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: transform 0.2s;
+        }
+
+        .doubloon-row:hover .doubloon-img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .doubloon-info {
+            flex: 1;
+        }
+
+        .doubloon-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .doubloon-name.gold { color: #ffd700; }
+        .doubloon-name.silver { color: #e0e0e0; }
+        .doubloon-name.bronze { color: #cd7f32; }
+
+        .doubloon-value {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        .doubloon-subtotal {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .doubloon-input {
+            width: 65px;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .doubloon-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .doubloon-input::-webkit-inner-spin-button,
+        .doubloon-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .total-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .total-label {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .total-value {
+            color: #1a1a2e;
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive styles */
+        @media (max-height: 700px) {
+            body {
+                padding: 10px;
+            }
+
+            .calculator {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 5px;
+            }
+
+            .subtitle {
+                margin-bottom: 20px;
+                font-size: 0.8rem;
+            }
+
+            .doubloon-row {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .doubloon-img {
+                width: 40px;
+                height: 40px;
+                margin-right: 12px;
+            }
+
+            .doubloon-name {
+                font-size: 1rem;
+            }
+
+            .doubloon-value {
+                font-size: 0.75rem;
+            }
+
+            .doubloon-subtotal {
+                font-size: 0.7rem;
+                margin-top: 2px;
+            }
+
+            .btn {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+
+            .doubloon-input {
+                width: 55px;
+                padding: 8px;
+                font-size: 1rem;
+            }
+
+            .input-group {
+                gap: 5px;
+            }
+
+            .total-section {
+                margin-top: 18px;
+                padding: 18px;
+            }
+
+            .total-label {
+                font-size: 0.8rem;
+            }
+
+            .total-value {
+                font-size: 2.2rem;
+            }
+
+            .reset-btn {
+                margin-top: 15px;
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-height: 550px) {
+            .calculator {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                margin-bottom: 12px;
+            }
+
+            .doubloon-row {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+
+            .doubloon-img {
+                width: 35px;
+                height: 35px;
+                margin-right: 10px;
+            }
+
+            .doubloon-subtotal {
+                display: none;
+            }
+
+            .total-section {
+                margin-top: 12px;
+                padding: 14px;
+            }
+
+            .total-value {
+                font-size: 1.8rem;
+            }
+
+            .reset-btn {
+                margin-top: 10px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .calculator {
+                padding: 20px 15px;
+            }
+
+            .doubloon-img {
+                width: 38px;
+                height: 38px;
+                margin-right: 10px;
+            }
+
+            .doubloon-input {
+                width: 50px;
+                padding: 8px 4px;
+            }
+
+            .btn {
+                width: 26px;
+                height: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Doubloon Calculator</h1>
+        <p class="subtitle">Count yer treasure, matey!</p>
+
+        <div class="doubloon-row gold">
+            <img src="gold.png" alt="Gold Doubloon" class="doubloon-img">
+            <div class="doubloon-info">
+                <div class="doubloon-name gold">Gold</div>
+                <div class="doubloon-value">10 doubloons each</div>
+                <div class="doubloon-subtotal" id="gold-subtotal">= 0</div>
+            </div>
+            <div class="input-group">
+                <button class="btn" onclick="decrement('gold')">-</button>
+                <input type="number" id="gold" class="doubloon-input" value="0" min="0">
+                <button class="btn" onclick="increment('gold')">+</button>
+            </div>
+        </div>
+
+        <div class="doubloon-row silver">
+            <img src="silver.png" alt="Silver Doubloon" class="doubloon-img">
+            <div class="doubloon-info">
+                <div class="doubloon-name silver">Silver</div>
+                <div class="doubloon-value">5 doubloons each</div>
+                <div class="doubloon-subtotal" id="silver-subtotal">= 0</div>
+            </div>
+            <div class="input-group">
+                <button class="btn" onclick="decrement('silver')">-</button>
+                <input type="number" id="silver" class="doubloon-input" value="0" min="0">
+                <button class="btn" onclick="increment('silver')">+</button>
+            </div>
+        </div>
+
+        <div class="doubloon-row bronze">
+            <img src="bronze.png" alt="Bronze Doubloon" class="doubloon-img">
+            <div class="doubloon-info">
+                <div class="doubloon-name bronze">Bronze</div>
+                <div class="doubloon-value">1 doubloon each</div>
+                <div class="doubloon-subtotal" id="bronze-subtotal">= 0</div>
+            </div>
+            <div class="input-group">
+                <button class="btn" onclick="decrement('bronze')">-</button>
+                <input type="number" id="bronze" class="doubloon-input" value="0" min="0">
+                <button class="btn" onclick="increment('bronze')">+</button>
+            </div>
+        </div>
+
+        <div class="total-section">
+            <div class="total-label">Total Doubloons</div>
+            <div class="total-value" id="total">0</div>
+        </div>
+
+        <button class="reset-btn" onclick="resetAll()">Reset All</button>
+    </div>
+
+    <script>
+        const values = { gold: 10, silver: 5, bronze: 1 };
+        const inputs = {
+            gold: document.getElementById('gold'),
+            silver: document.getElementById('silver'),
+            bronze: document.getElementById('bronze')
+        };
+        const subtotals = {
+            gold: document.getElementById('gold-subtotal'),
+            silver: document.getElementById('silver-subtotal'),
+            bronze: document.getElementById('bronze-subtotal')
+        };
+        const totalDisplay = document.getElementById('total');
+
+        function calculateTotal() {
+            let total = 0;
+
+            for (const type in inputs) {
+                const count = parseInt(inputs[type].value) || 0;
+                const subtotal = count * values[type];
+                subtotals[type].textContent = `= ${subtotal.toLocaleString()}`;
+                total += subtotal;
+            }
+
+            totalDisplay.textContent = total.toLocaleString();
+        }
+
+        function increment(type) {
+            const input = inputs[type];
+            input.value = (parseInt(input.value) || 0) + 1;
+            calculateTotal();
+        }
+
+        function decrement(type) {
+            const input = inputs[type];
+            const current = parseInt(input.value) || 0;
+            if (current > 0) {
+                input.value = current - 1;
+                calculateTotal();
+            }
+        }
+
+        function resetAll() {
+            for (const type in inputs) {
+                inputs[type].value = 0;
+            }
+            calculateTotal();
+        }
+
+        for (const type in inputs) {
+            inputs[type].addEventListener('input', calculateTotal);
+        }
+    </script>
+</body>
+</html>
