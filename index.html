@@ -18,7 +18,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
         }
 
@@ -30,8 +30,13 @@
                 0 25px 80px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(255, 255, 255, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            max-width: 420px;
+            max-width: 1000px;
             width: 100%;
+            transition: max-width 0.3s ease;
+        }
+
+        .calculator.narrow {
+            max-width: 420px;
         }
 
         h1 {
@@ -306,6 +311,39 @@
                 padding: 10px;
                 font-size: 0.85rem;
             }
+
+            .tab-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+
+            .section-header {
+                padding: 12px 14px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .shop-item {
+                padding: 8px 10px;
+            }
+
+            .item-name {
+                font-size: 0.8rem;
+            }
+
+            .shop-total {
+                padding: 16px;
+            }
+
+            .shop-total .total-value {
+                font-size: 2rem;
+            }
+
+            .comparison-section {
+                padding: 16px;
+            }
         }
 
         @media (max-height: 550px) {
@@ -371,6 +409,414 @@
                 width: 26px;
                 height: 26px;
             }
+
+            .item-input {
+                width: 40px;
+                padding: 5px;
+            }
+
+            .item-btn {
+                width: 24px;
+                height: 24px;
+            }
+
+            .item-name {
+                font-size: 0.8rem;
+            }
+
+            .section-info {
+                gap: 8px;
+            }
+
+            .section-count {
+                display: none;
+            }
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Item Shop Styles */
+        .shop-section {
+            margin-bottom: 16px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .section-title {
+            font-family: 'Pirata One', cursive;
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+
+        .section-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-count {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        .section-subtotal {
+            color: #ffd700;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .section-arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .section-header.expanded .section-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 12px 0;
+        }
+
+        .section-content.expanded {
+            display: block;
+        }
+
+        /* Image + Items Layout */
+        .image-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .image-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .reference-image {
+            flex-shrink: 0;
+            width: 380px;
+            position: relative;
+        }
+
+        .reference-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .reference-image img:hover {
+            opacity: 0.9;
+        }
+
+        .expand-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Image Modal/Lightbox */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 95%;
+            max-height: 95%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.2);
+        }
+
+        .items-list {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .shop-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            margin: 4px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .shop-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .shop-item.has-quantity {
+            border-left-color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-cost {
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 0.7rem;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .item-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .item-input {
+            width: 40px;
+            padding: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-weight: 600;
+        }
+
+        .item-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        /* Mobile: Stack image above items */
+        @media (max-width: 850px) {
+            .image-group {
+                flex-direction: column;
+            }
+
+            .reference-image {
+                width: 100%;
+            }
+
+            .calculator {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .calculator {
+                max-width: 100%;
+                border-radius: 16px;
+            }
+        }
+
+        .item-input::-webkit-inner-spin-button,
+        .item-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Comparison Summary */
+        .comparison-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .comparison-row:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+        }
+
+        .comparison-value {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .comparison-value.have {
+            color: #ffd700;
+        }
+
+        .comparison-value.need {
+            color: #ff9500;
+        }
+
+        .comparison-value.positive {
+            color: #4ade80;
+        }
+
+        .comparison-value.negative {
+            color: #f87171;
+        }
+
+        /* Shop Total */
+        .shop-total {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff9500 0%, #ff6b00 100%);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 149, 0, 0.2);
+        }
+
+        .shop-total .total-label {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .shop-total .total-value {
+            color: #1a1a2e;
+            font-size: 2.5rem;
         }
 
         /* Hide extension sync button */
@@ -384,6 +830,12 @@
         <h1>Doubloon Calculator</h1>
         <p class="subtitle">Count yer treasure, matey!</p>
 
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('calculator')">My Doubloons</button>
+            <button class="tab-btn" onclick="switchTab('shop')">Item Shop</button>
+        </div>
+
+        <div id="calculator-tab" class="tab-content active">
         <div class="doubloon-row gold">
             <img src="gold.png" alt="Gold Doubloon" class="doubloon-img">
             <div class="doubloon-info">
@@ -432,9 +884,45 @@
         </div>
 
         <button class="reset-btn" onclick="resetAll()">Reset All</button>
+        </div>
+
+        <div id="shop-tab" class="tab-content">
+            <div id="shop-sections"></div>
+
+            <div class="shop-total">
+                <div class="total-label">Total Needed</div>
+                <div class="total-value" id="shop-total">0</div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="comparison-row">
+                    <span class="comparison-label">You have</span>
+                    <span class="comparison-value have" id="compare-have">0</span>
+                </div>
+                <div class="comparison-row">
+                    <span class="comparison-label">You need</span>
+                    <span class="comparison-value need" id="compare-need">0</span>
+                </div>
+                <div class="comparison-row">
+                    <span class="comparison-label">Difference</span>
+                    <span class="comparison-value" id="compare-diff">0</span>
+                </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetShop()">Reset Item Shop</button>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <img id="modalImage" src="" alt="Expanded view">
+        </div>
     </div>
 
     <script>
+        // ===== DOUBLOON CALCULATOR =====
         const values = { gold: 10, silver: 5, bronze: 1 };
         const inputs = {
             gold: document.getElementById('gold'),
@@ -448,6 +936,7 @@
         };
         const totalDisplay = document.getElementById('total');
         const STORAGE_KEY = 'doubloonCalcValues';
+        const SHOP_STORAGE_KEY = 'doubloonShopItems';
 
         function saveToStorage() {
             const data = {};
@@ -469,6 +958,15 @@
             }
         }
 
+        function getMyDoubloons() {
+            let total = 0;
+            for (const type in inputs) {
+                const count = parseInt(inputs[type].value) || 0;
+                total += count * values[type];
+            }
+            return total;
+        }
+
         function calculateTotal() {
             let total = 0;
 
@@ -481,6 +979,7 @@
 
             totalDisplay.textContent = total.toLocaleString();
             saveToStorage();
+            updateComparison();
         }
 
         function increment(type) {
@@ -510,9 +1009,337 @@
             inputs[type].addEventListener('input', calculateTotal);
         }
 
-        // Load saved values on page load
+        // ===== TAB NAVIGATION =====
+        const calculatorEl = document.querySelector('.calculator');
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (tab === 'calculator') {
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                document.getElementById('calculator-tab').classList.add('active');
+                calculatorEl.classList.add('narrow');
+            } else {
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                document.getElementById('shop-tab').classList.add('active');
+                calculatorEl.classList.remove('narrow');
+            }
+        }
+
+        // ===== ITEM SHOP (Organized by Source Image) =====
+        const shopCategories = {
+            outfits: {
+                name: 'Outfits & Clothing',
+                imageGroups: [
+                    {
+                        image: 'Clothing__Outfits_1.png',
+                        items: [
+                            { id: 'tan-sparrow', name: 'Tan Sparrow Outfit', cost: 10 },
+                            { id: 'blue-sparrow', name: 'Blue Sparrow Outfit', cost: 10 },
+                            { id: 'purple-sparrow', name: 'Purple Sparrow Outfit', cost: 10 },
+                            { id: 'green-sparrow', name: 'Green Sparrow Outfit', cost: 10 },
+                            { id: 'blue-barbossa', name: 'Blue Barbossa Outfit', cost: 10 },
+                            { id: 'red-barbossa', name: 'Red Barbossa Outfit', cost: 10 },
+                            { id: 'white-ceremony', name: 'White Ceremony Outfit', cost: 15 },
+                            { id: 'black-ceremony', name: 'Black Ceremony Outfit', cost: 15 }
+                        ]
+                    },
+                    {
+                        image: 'Clothing__Outfits_2.png',
+                        items: [
+                            { id: 'blue-tia', name: 'Blue Tia Outfit', cost: 10 },
+                            { id: 'purple-tia', name: 'Purple Tia Outfit', cost: 10 },
+                            { id: 'yellow-tia', name: 'Yellow Tia Outfit', cost: 10 },
+                            { id: 'green-tia', name: 'Green Tia Outfit', cost: 10 },
+                            { id: 'purple-lady-pirate', name: 'Purple Lady Pirate Outfit', cost: 10 },
+                            { id: 'blue-lady-pirate', name: 'Blue Lady Pirate Outfit', cost: 10 },
+                            { id: 'bandaged-pirate', name: 'Bandaged Pirate Outfit', cost: 20 },
+                            { id: 'aura-gold', name: 'Aura - Gold Doubloons', cost: 35 }
+                        ]
+                    },
+                    {
+                        image: 'Clothing__Outfits_3.png',
+                        items: [
+                            { id: 'aura-cursed', name: 'Aura - Cursed Doubloons', cost: 35 },
+                            { id: 'green-pirate-curse', name: 'Green Pirate Curse (Animated)', cost: 15 },
+                            { id: 'red-pirate-curse', name: 'Red Pirate Curse (Animated)', cost: 15 },
+                            { id: 'eyepatch-scar', name: 'Eyepatch with Scar (5 colors)', cost: 10 },
+                            { id: 'captain-hook', name: 'Captain Hook Rococo Outfit', cost: 15 },
+                            { id: 'pirate-girl', name: 'Pirate Girl Outfit (2 Shirts)', cost: 10 },
+                            { id: 'kraken-hat', name: 'Kraken Hat - Inky', cost: 5 }
+                        ]
+                    }
+                ]
+            },
+            pins: {
+                name: 'Pins',
+                imageGroups: [
+                    {
+                        image: 'Pins.png',
+                        items: [
+                            { id: 'magic-coral', name: 'Magic - Turn into Coral', cost: 15 },
+                            { id: 'magic-pirate', name: 'Magic - Turn into a Pirate', cost: 15 },
+                            { id: 'magic-treasure', name: 'Magic - Buried in Treasure', cost: 15 },
+                            { id: 'magic-storm', name: 'Magic - Cursed Storm', cost: 15 },
+                            { id: 'pirate-pinset', name: 'Pirate Attraction Pinset', cost: 10 },
+                            { id: 'potc-pinset', name: 'POTC Doubloon Pinset', cost: 3 }
+                        ]
+                    }
+                ]
+            },
+            furniture: {
+                name: 'Furniture',
+                imageGroups: [
+                    {
+                        image: 'Furniture_1.png',
+                        items: [
+                            { id: 'palm-tree', name: 'Palm Tree Bundle', cost: 1 },
+                            { id: 'hanging-cages', name: 'Hanging Cages Bundle', cost: 2 },
+                            { id: 'jack-barrel', name: 'Jack in a Barrel (Toggleable)', cost: 5 },
+                            { id: 'gold-chair', name: 'Gold Coin Chair (Animated)', cost: 5 },
+                            { id: 'treasure-sparkles', name: 'Treasure Sparkles (Animated)', cost: 5 },
+                            { id: 'pirate-wall', name: 'Pirate Town Wall Bundle', cost: 1 },
+                            { id: 'jail-wall', name: 'Jail Wall Bundle', cost: 2 },
+                            { id: 'pirate-items', name: 'Pirate Item Bundle', cost: 3 }
+                        ]
+                    },
+                    {
+                        image: 'Furniture_2.png',
+                        items: [
+                            { id: 'treasure-chest', name: 'Treasure Chest Bundle', cost: 3 },
+                            { id: 'kraken-tentacle', name: 'Kraken Tentacle Bundle', cost: 1 },
+                            { id: 'pirate-treasure-chair', name: 'Pirate Treasure Chair', cost: 5 },
+                            { id: 'galleon-chair', name: 'Galleon Chair Set', cost: 5 },
+                            { id: 'pirate-lantern', name: 'Pirate Lantern Bundle', cost: 3 },
+                            { id: 'flaming-window', name: 'Flaming Ransacked Window', cost: 5 }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const itemQuantities = {};
+        const expandedSections = { outfits: true, pins: false, furniture: false };
+
+        function getAllItems() {
+            const items = [];
+            for (const catKey in shopCategories) {
+                for (const group of shopCategories[catKey].imageGroups) {
+                    items.push(...group.items);
+                }
+            }
+            return items;
+        }
+
+        function getCategorySubtotal(categoryKey) {
+            let subtotal = 0;
+            for (const group of shopCategories[categoryKey].imageGroups) {
+                for (const item of group.items) {
+                    subtotal += (itemQuantities[item.id] || 0) * item.cost;
+                }
+            }
+            return subtotal;
+        }
+
+        function renderShop() {
+            const container = document.getElementById('shop-sections');
+            container.innerHTML = '';
+
+            for (const categoryKey in shopCategories) {
+                const category = shopCategories[categoryKey];
+                const section = document.createElement('div');
+                section.className = 'shop-section';
+
+                const totalItems = category.imageGroups.reduce((sum, g) => sum + g.items.length, 0);
+                const subtotal = getCategorySubtotal(categoryKey);
+
+                section.innerHTML = `
+                    <div class="section-header ${expandedSections[categoryKey] ? 'expanded' : ''}" onclick="toggleSection('${categoryKey}')">
+                        <span class="section-title">${category.name}</span>
+                        <div class="section-info">
+                            <span class="section-count">${totalItems} items</span>
+                            ${subtotal > 0 ? `<span class="section-subtotal">${subtotal} db</span>` : ''}
+                            <span class="section-arrow">▼</span>
+                        </div>
+                    </div>
+                    <div class="section-content ${expandedSections[categoryKey] ? 'expanded' : ''}" id="section-${categoryKey}">
+                        ${category.imageGroups.map(group => `
+                            <div class="image-group">
+                                <div class="reference-image">
+                                    <img src="${group.image}" alt="${category.name}" onclick="openModal('${group.image}')">
+                                    <button class="expand-btn" onclick="openModal('${group.image}')">&#x26F6; Expand</button>
+                                </div>
+                                <div class="items-list">
+                                    ${group.items.map(item => `
+                                        <div class="shop-item ${(itemQuantities[item.id] || 0) > 0 ? 'has-quantity' : ''}" id="item-${item.id}">
+                                            <div class="item-info">
+                                                <div class="item-name">${item.name}</div>
+                                                <div class="item-cost">${item.cost} doubloon${item.cost !== 1 ? 's' : ''}</div>
+                                            </div>
+                                            <div class="item-controls">
+                                                <button class="item-btn" onclick="decrementItem('${item.id}')">-</button>
+                                                <input type="number" class="item-input" value="${itemQuantities[item.id] || 0}" min="0"
+                                                       onchange="setItemQuantity('${item.id}', this.value)">
+                                                <button class="item-btn" onclick="incrementItem('${item.id}')">+</button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                container.appendChild(section);
+            }
+
+            calculateShopTotal();
+        }
+
+        function toggleSection(categoryKey) {
+            expandedSections[categoryKey] = !expandedSections[categoryKey];
+            renderShop();
+        }
+
+        // Image Modal Functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget && !event.target.classList.contains('modal-close')) {
+                return;
+            }
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function incrementItem(itemId) {
+            itemQuantities[itemId] = (itemQuantities[itemId] || 0) + 1;
+            updateItemDisplay(itemId);
+            calculateShopTotal();
+            saveShopToStorage();
+        }
+
+        function decrementItem(itemId) {
+            if ((itemQuantities[itemId] || 0) > 0) {
+                itemQuantities[itemId]--;
+                updateItemDisplay(itemId);
+                calculateShopTotal();
+                saveShopToStorage();
+            }
+        }
+
+        function setItemQuantity(itemId, value) {
+            itemQuantities[itemId] = Math.max(0, parseInt(value) || 0);
+            updateItemDisplay(itemId);
+            calculateShopTotal();
+            saveShopToStorage();
+        }
+
+        function updateItemDisplay(itemId) {
+            const itemEl = document.getElementById(`item-${itemId}`);
+            if (itemEl) {
+                const input = itemEl.querySelector('.item-input');
+                input.value = itemQuantities[itemId] || 0;
+
+                if ((itemQuantities[itemId] || 0) > 0) {
+                    itemEl.classList.add('has-quantity');
+                } else {
+                    itemEl.classList.remove('has-quantity');
+                }
+            }
+
+            // Update section subtotals
+            for (const categoryKey in shopCategories) {
+                const subtotal = getCategorySubtotal(categoryKey);
+                const header = document.querySelector(`[onclick="toggleSection('${categoryKey}')"]`);
+                if (header) {
+                    const subtotalEl = header.querySelector('.section-subtotal');
+                    if (subtotal > 0) {
+                        if (subtotalEl) {
+                            subtotalEl.textContent = `${subtotal} db`;
+                        } else {
+                            const infoEl = header.querySelector('.section-info');
+                            const arrow = infoEl.querySelector('.section-arrow');
+                            const newSubtotal = document.createElement('span');
+                            newSubtotal.className = 'section-subtotal';
+                            newSubtotal.textContent = `${subtotal} db`;
+                            infoEl.insertBefore(newSubtotal, arrow);
+                        }
+                    } else if (subtotalEl) {
+                        subtotalEl.remove();
+                    }
+                }
+            }
+        }
+
+        function calculateShopTotal() {
+            let total = 0;
+            for (const item of getAllItems()) {
+                total += (itemQuantities[item.id] || 0) * item.cost;
+            }
+
+            document.getElementById('shop-total').textContent = total.toLocaleString();
+            updateComparison();
+        }
+
+        function updateComparison() {
+            const have = getMyDoubloons();
+            let need = 0;
+            for (const item of getAllItems()) {
+                need += (itemQuantities[item.id] || 0) * item.cost;
+            }
+
+            const diff = have - need;
+
+            document.getElementById('compare-have').textContent = have.toLocaleString();
+            document.getElementById('compare-need').textContent = need.toLocaleString();
+
+            const diffEl = document.getElementById('compare-diff');
+            diffEl.textContent = (diff >= 0 ? '+' : '') + diff.toLocaleString();
+            diffEl.className = 'comparison-value ' + (diff >= 0 ? 'positive' : 'negative');
+        }
+
+        function saveShopToStorage() {
+            localStorage.setItem(SHOP_STORAGE_KEY, JSON.stringify(itemQuantities));
+        }
+
+        function loadShopFromStorage() {
+            const saved = localStorage.getItem(SHOP_STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                for (const itemId in data) {
+                    itemQuantities[itemId] = data[itemId];
+                }
+            }
+        }
+
+        function resetShop() {
+            for (const key in itemQuantities) {
+                delete itemQuantities[key];
+            }
+            localStorage.removeItem(SHOP_STORAGE_KEY);
+            renderShop();
+        }
+
+        // ===== INITIALIZATION =====
         loadFromStorage();
+        loadShopFromStorage();
         calculateTotal();
+        renderShop();
+        calculatorEl.classList.add('narrow'); // Start narrow on calculator tab
     </script>
 </body>
 </html>
