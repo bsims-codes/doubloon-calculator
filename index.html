@@ -819,6 +819,73 @@
             font-size: 2.5rem;
         }
 
+        /* Item List Text Box */
+        .item-list-section {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-list-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .copy-btn.copied {
+            background: rgba(74, 222, 128, 0.2);
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+
+        .item-list-text {
+            width: 100%;
+            min-height: 60px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .item-list-text:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .item-list-text::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
         /* Hide extension sync button */
         #prize-tracker-sync-indicator {
             display: none !important;
@@ -907,6 +974,14 @@
                     <span class="comparison-label">Difference</span>
                     <span class="comparison-value" id="compare-diff">0</span>
                 </div>
+            </div>
+
+            <div class="item-list-section">
+                <div class="item-list-header">
+                    <span class="item-list-label">Selected Items</span>
+                    <button class="copy-btn" onclick="copyItemList()">Copy</button>
+                </div>
+                <textarea class="item-list-text" id="item-list-text" readonly placeholder="No items selected..."></textarea>
             </div>
 
             <button class="reset-btn" onclick="resetShop()">Reset Item Shop</button>
@@ -1293,6 +1368,40 @@
 
             document.getElementById('shop-total').textContent = total.toLocaleString();
             updateComparison();
+            updateItemListText();
+        }
+
+        function updateItemListText() {
+            const selectedItems = [];
+            for (const item of getAllItems()) {
+                const qty = itemQuantities[item.id] || 0;
+                if (qty > 0) {
+                    if (qty === 1) {
+                        selectedItems.push(item.name);
+                    } else {
+                        selectedItems.push(`${qty}x ${item.name}`);
+                    }
+                }
+            }
+
+            const textArea = document.getElementById('item-list-text');
+            textArea.value = selectedItems.join(', ');
+        }
+
+        function copyItemList() {
+            const textArea = document.getElementById('item-list-text');
+            const btn = document.querySelector('.copy-btn');
+
+            if (!textArea.value) return;
+
+            navigator.clipboard.writeText(textArea.value).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
         }
 
         function updateComparison() {
