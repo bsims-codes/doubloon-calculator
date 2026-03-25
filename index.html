@@ -372,6 +372,11 @@
                 height: 26px;
             }
         }
+
+        /* Hide extension sync button */
+        #prize-tracker-sync-indicator {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -442,6 +447,27 @@
             bronze: document.getElementById('bronze-subtotal')
         };
         const totalDisplay = document.getElementById('total');
+        const STORAGE_KEY = 'doubloonCalcValues';
+
+        function saveToStorage() {
+            const data = {};
+            for (const type in inputs) {
+                data[type] = parseInt(inputs[type].value) || 0;
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                for (const type in inputs) {
+                    if (data[type] !== undefined) {
+                        inputs[type].value = data[type];
+                    }
+                }
+            }
+        }
 
         function calculateTotal() {
             let total = 0;
@@ -454,6 +480,7 @@
             }
 
             totalDisplay.textContent = total.toLocaleString();
+            saveToStorage();
         }
 
         function increment(type) {
@@ -475,12 +502,17 @@
             for (const type in inputs) {
                 inputs[type].value = 0;
             }
+            localStorage.removeItem(STORAGE_KEY);
             calculateTotal();
         }
 
         for (const type in inputs) {
             inputs[type].addEventListener('input', calculateTotal);
         }
+
+        // Load saved values on page load
+        loadFromStorage();
+        calculateTotal();
     </script>
 </body>
 </html>
